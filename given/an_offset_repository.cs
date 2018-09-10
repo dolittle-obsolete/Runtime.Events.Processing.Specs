@@ -15,5 +15,18 @@ namespace Dolittle.Runtime.Events.Processing.InMemory.Specs.given
             var factory = Activator.CreateInstance(_sut_provider_type) as IProvideTheOffsetRepository;
             return factory.Build();
         };
+
+        public static void _do(IEventProcessorOffsetRepository event_store, Action<IEventProcessorOffsetRepository> @do)
+        {
+            try
+            {
+                @do(event_store);
+            }
+            catch (System.Exception)
+            {
+                (event_store).Dispose();
+                throw;
+            }
+        }
     }
 }

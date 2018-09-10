@@ -19,8 +19,9 @@ namespace Dolittle.Runtime.Events.Processing.InMemory.Specs.when_fetching_the_of
             repository.Set(id,last_version);
         };
 
-        Because of = () => result = repository.Get(id);
+        Because of = () => _do(repository,(_) => result = _.Get(id));
 
         It should_return_the_none_commit_version = () => result.ShouldEqual(last_version);
+        Cleanup cleanup = () => repository.Dispose();
     }
 }

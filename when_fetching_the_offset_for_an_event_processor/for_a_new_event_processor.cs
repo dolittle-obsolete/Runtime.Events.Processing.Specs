@@ -11,8 +11,10 @@ namespace Dolittle.Runtime.Events.Processing.InMemory.Specs.when_fetching_the_of
         static CommittedEventVersion result;
         Establish context = () => repository = get_offset_repository();
 
-        Because of = () => result = repository.Get(Guid.NewGuid());
+        Because of = () => _do(repository, (_) => result = _.Get(Guid.NewGuid()));
 
         It should_return_the_none_commit_version = () => result.ShouldEqual(CommittedEventVersion.None);
+
+        Cleanup cleanup = () => repository.Dispose();
     }
 }
