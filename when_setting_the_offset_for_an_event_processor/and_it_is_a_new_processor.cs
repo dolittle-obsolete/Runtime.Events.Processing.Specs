@@ -21,7 +21,7 @@ namespace Dolittle.Runtime.Events.Processing.InMemory.Specs.when_setting_the_off
 
         Because of = () => _do(repository, _ => _.Set(event_processor,last_processed));
 
-        It should_set_the_last_processed_version_for_the_processor = () => repository.Get(event_processor).ShouldEqual(last_processed);
+        It should_set_the_last_processed_version_for_the_processor = () => _do(repository, _ => _.Get(event_processor).ShouldEqual(last_processed));
         Cleanup cleanup = () => repository.Dispose();
     }
 }

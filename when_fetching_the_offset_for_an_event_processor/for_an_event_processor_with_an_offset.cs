@@ -16,7 +16,7 @@ namespace Dolittle.Runtime.Events.Processing.InMemory.Specs.when_fetching_the_of
             id = Guid.NewGuid();
             last_version = new CommittedEventVersion(10,5,1);
             repository = get_offset_repository();
-            repository.Set(id,last_version);
+            _do(repository, _ => _.Set(id,last_version));
         };
 
         Because of = () => _do(repository,(_) => result = _.Get(id));

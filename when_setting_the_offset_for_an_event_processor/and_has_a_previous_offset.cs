@@ -19,12 +19,12 @@ namespace Dolittle.Runtime.Events.Processing.InMemory.Specs.when_setting_the_off
             last_processed = new CommittedEventVersion(100,1,1);
             event_processor = Guid.NewGuid();
             repository = get_offset_repository();
-            repository.Set(event_processor,current_version);
+            _do(repository, _ => _.Set(event_processor,current_version));
         };
 
         Because of = () => _do(repository, _ => _.Set(event_processor,last_processed));
 
-        It should_update_the_last_processed_version_for_the_processor = () => repository.Get(event_processor).ShouldEqual(last_processed);
+        It should_update_the_last_processed_version_for_the_processor = () => _do(repository, _ => _.Get(event_processor).ShouldEqual(last_processed));
         Cleanup cleanup = () => repository.Dispose();
     }
 }
